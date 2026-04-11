@@ -1,0 +1,1 @@
+<h1>Redirects</h1><form method="post"><?=csrf_field()?><input name="old_path" placeholder="/gammal-url"><input name="new_path" placeholder="/ny-url"><button class="btn">Spara 301</button></form><ul><?php foreach($redirects as $r): ?><li><?=e($r['old_path'])?> -> <?=e($r['new_path'])?></li><?php endforeach; ?></ul>

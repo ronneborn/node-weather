@@ -1,0 +1,1 @@
+<h1>Leads</h1><a class="btn" href="/admin/leads/export">Exportera CSV</a><table><tr><th>Namn</th><th>Kontakt</th><th>Meddelande</th></tr><?php foreach($leads as $l): ?><tr><td><?=e($l['name'])?></td><td><?=e($l['email'])?> / <?=e($l['phone'])?></td><td><?=e($l['message'])?></td></tr><?php endforeach; ?></table>

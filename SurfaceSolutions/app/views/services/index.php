@@ -1,0 +1,1 @@
+<div class="container"><h1>Tjänster</h1><div class="grid"><?php foreach($services as $s): ?><article class="card"><h3><?=e($s['name'])?></h3><p><?=e($s['short_description'] ?? '')?></p></article><?php endforeach; ?></div></div>

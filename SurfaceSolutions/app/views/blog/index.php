@@ -1,0 +1,1 @@
+<div class="container"><h1>Blogg</h1><?php foreach($posts as $p): ?><article><h2><a href="/blogg/<?=e($p['slug'])?>"><?=e($p['title'])?></a></h2><p><?=e($p['excerpt'])?></p></article><?php endforeach; ?></div>

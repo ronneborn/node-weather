@@ -1,0 +1,1 @@
+<h1>Dashboard</h1><p>Sidvisningar 30 dagar: <?=e((string)$stats['views30'])?></p><ul><?php foreach($stats['topPages'] as $row): ?><li><?=e($row['slug'])?> (<?=e((string)$row['c'])?>)</li><?php endforeach; ?></ul>
