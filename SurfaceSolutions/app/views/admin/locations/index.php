@@ -1,0 +1,1 @@
+<h1>Lista</h1><a class="btn" href="create">Skapa</a><table><tr><th>Namn</th><th>Slug</th><th></th></tr><?php foreach($items as $i): ?><tr><td><?=e($i['name'] ?? $i['title'])?></td><td><?=e($i['slug'])?></td><td><a href="edit/<?=e((string)$i['id'])?>">Redigera</a></td></tr><?php endforeach; ?></table>

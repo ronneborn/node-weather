@@ -1,0 +1,1 @@
+<h1>Admin login</h1><?php if(!empty($error)) echo '<p>'.e($error).'</p>'; ?><form method="post"><?=csrf_field()?><input name="email" type="email" placeholder="E-post"><input name="password" type="password" placeholder="Lösenord"><button class="btn">Logga in</button></form>

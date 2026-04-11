@@ -1,0 +1,3 @@
+<section class="hero"><div class="container"><h1>Taktvätt, målning och städ i Västerås</h1><p>Vi hjälper villaägare, BRF:er och företag i Västerås med professionell ytbehandling och rengöring.</p><a href="/kontakt" class="btn">Boka kostnadsfri offert</a></div></section>
+<section class="container"><h2>Populära tjänster</h2><div class="grid"><?php foreach($services as $s): ?><article class="card"><h3><?= e($s['name']) ?></h3><p><?= e($s['short_description'] ?? '') ?></p><a href="/<?= e($s['slug']) ?>-vasteras">Läs mer</a></article><?php endforeach; ?></div></section>
+<section class="container"><h2>Vi arbetar i</h2><p><?php foreach($locations as $l) echo '<a href="/'.e($l['slug']).'">'.e($l['name']).'</a> '; ?></p></section>

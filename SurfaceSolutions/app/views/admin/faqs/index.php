@@ -1,0 +1,1 @@
+<h1>FAQ</h1><form method="post"><?=csrf_field()?><input name="question" placeholder="Fråga"><textarea name="answer" placeholder="Svar"></textarea><input name="sort_order" value="0"><input name="status" value="active"><button class="btn">Lägg till</button></form><ul><?php foreach($faqs as $f): ?><li><?=e($f['question'])?></li><?php endforeach; ?></ul>

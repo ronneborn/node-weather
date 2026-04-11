@@ -1,0 +1,1 @@
+<h1>Statistik</h1><h2>7 dagar</h2><ul><?php foreach($stats['last7'] as $s): ?><li><?=e($s['slug'])?> (<?=e((string)$s['c'])?>)</li><?php endforeach; ?></ul><h2>30 dagar</h2><ul><?php foreach($stats['last30'] as $s): ?><li><?=e($s['slug'])?> (<?=e((string)$s['c'])?>)</li><?php endforeach; ?></ul>
