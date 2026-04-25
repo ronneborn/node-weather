@@ -1,0 +1,176 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  ADMIN
+  EDITOR
+}
+
+enum PostStatus {
+  DRAFT
+  PUBLISHED
+}
+
+model User {
+  id           String    @id @default(cuid())
+  name         String
+  email        String    @unique
+  passwordHash String?
+  role         UserRole  @default(EDITOR)
+  posts        BlogPost[]
+  accounts     Account[]
+  sessions     Session[]
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model BlogPost {
+  id              String             @id @default(cuid())
+  title           String
+  slug            String             @unique
+  excerpt         String
+  contentHtml     String
+  featuredImageId String?
+  metaTitle       String
+  metaDescription String
+  canonicalUrl    String?
+  status          PostStatus         @default(DRAFT)
+  publishedAt     DateTime?
+  authorId        String
+  author          User               @relation(fields: [authorId], references: [id])
+  categories      BlogPostCategory[]
+  tags            BlogPostTag[]
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
+}
+
+model BlogCategory {
+  id    String             @id @default(cuid())
+  name  String
+  slug  String             @unique
+  posts BlogPostCategory[]
+}
+
+model BlogTag {
+  id    String        @id @default(cuid())
+  name  String
+  slug  String        @unique
+  posts BlogPostTag[]
+}
+
+model BlogPostCategory {
+  postId     String
+  categoryId String
+  post       BlogPost     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  category   BlogCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@id([postId, categoryId])
+}
+
+model BlogPostTag {
+  postId String
+  tagId  String
+  post   BlogPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  tag    BlogTag  @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([postId, tagId])
+}
+
+model SiteSetting {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SEOOverride {
+  id              String   @id @default(cuid())
+  path            String   @unique
+  metaTitle       String
+  metaDescription String
+  canonicalUrl    String?
+  noIndex         Boolean  @default(false)
+}
+
+model PairContent {
+  id            String   @id @default(cuid())
+  fromCurrency  String
+  toCurrency    String
+  introCopy     String
+  customBlocks  Json?
+  seoOverrideId String?
+  updatedAt     DateTime @updatedAt
+
+  @@unique([fromCurrency, toCurrency])
+}
+
+model FAQ {
+  id        String   @id @default(cuid())
+  scope     String
+  pairKey   String?
+  question  String
+  answer    String
+  createdAt DateTime @default(now())
+}
+
+model MediaAsset {
+  id        String   @id @default(cuid())
+  fileName  String
+  mimeType  String
+  url       String
+  size      Int
+  createdAt DateTime @default(now())
+}
+
+model PopularConversionLog {
+  id         String   @id @default(cuid())
+  from       String
+  to         String
+  amount     Decimal  @db.Decimal(18, 6)
+  ipHash     String?
+  userAgent  String?
+  createdAt  DateTime @default(now())
+}
+
+model RateCache {
+  key       String   @id
+  base      String
+  quote     String
+  rate      Float
+  asOf      DateTime
+  source    String
+  fetchedAt DateTime @default(now())
+}
